@@ -12,6 +12,6 @@ class WaterTemperatureServer():
         wt = WaterTemperature()
         wt.value = waterTemperature
         wt.unit = ('C')
-        db.session.add(t)
+        db.session.add(wt)
         db.session.commit()
         return waterTemperature
