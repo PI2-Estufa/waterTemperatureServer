@@ -1,6 +1,7 @@
 from nameko.rpc import rpc
 import db
 from db import WaterTemperature
+from psycopg2 import OperationalError
 
 
 class WaterTemperatureServer():
@@ -12,6 +13,9 @@ class WaterTemperatureServer():
         wt = WaterTemperature()
         wt.value = waterTemperature
         wt.unit = ('C')
-        db.session.add(wt)
-        db.session.commit()
+        try:
+            db.session.add(wt)
+            db.session.commit()
+        except OperationalError:
+            db.session.rollback()
         return waterTemperature
